@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import NewsList from './NewsList';
+import LoadAmount from '../components/LoadAmount';
 
 class NewsBox extends Component{
     constructor(props) {
@@ -17,6 +18,7 @@ class NewsBox extends Component{
             <div className="news-box">
             <Header title = "True News"></Header>
             <SearchBar></SearchBar>
+            <LoadAmount></LoadAmount>
             <NewsList></NewsList>
             </div>
         )
