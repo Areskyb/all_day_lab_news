@@ -9,11 +9,12 @@ class NewsBox extends Component{
         super(props);
         this.state={
             stories:[],
-            amount: 100,
+            amount: 20,
             currentSearch : '',
             fetchStories: []
         }
         this.handleStorySearchResult = this.handleStorySearchResult.bind(this);
+        this.handleLoadChange = this.handleLoadChange.bind(this);
     }
 
     componentDidMount(){
@@ -62,6 +63,12 @@ class NewsBox extends Component{
             this.loadStories();
 
     }
+
+    handleLoadChange(value){
+        value = parseInt(value);
+        this.setState({amount:value});
+        this.loadStories();
+    }
     
 
 
@@ -76,7 +83,7 @@ class NewsBox extends Component{
             <div className="news-box">
             <Header title = "True News"></Header>
             <SearchBar currentSearchStory = {this.state.currentSearch} onSearch = {this.handleStorySearchResult}></SearchBar>
-            <LoadAmount></LoadAmount>
+            <LoadAmount onLoadChange = {this.handleLoadChange} amount ={this.state.amount} ></LoadAmount>
             <NewsList stories={this.state.stories}></NewsList>
             </div>
         )
