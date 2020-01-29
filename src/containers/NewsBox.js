@@ -25,8 +25,11 @@ class NewsBox extends Component{
     }
 
     loadStories(){
-        this.loadIds().then(ids => {
-            const promises = ids.slice(0, this.state.amount).map(id => {
+        this.loadIds()
+        .then(ids => {
+            const promises = ids
+            .slice(0, this.state.amount)
+            .map(id => {
                 return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
                     .then(res => res.json())
             })
