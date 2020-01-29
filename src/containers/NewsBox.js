@@ -9,8 +9,11 @@ class NewsBox extends Component{
         super(props);
         this.state={
             stories:[],
-            amount: 100
+            amount: 100,
+            currentSearch : '',
+            fetchStories: []
         }
+        this.handleStorySearchResult = this.handleStorySearchResult.bind(this);
     }
 
     componentDidMount(){
@@ -35,12 +38,31 @@ class NewsBox extends Component{
             })
     
             Promise.all(promises)
-            .then(stories => this.setState({stories:stories}))
+            .then(stories => this.setState({stories:stories, fetchStories:stories}))
         }) 
     }
 
+     handleStorySearchResult(value){
+            const fetchStories = this.state.fetchStories;
+            this.setState({currentSearch:value})
+
+            const storySearchResult = this.state.stories.filter(story => {
+                if (story.title.includes(value)){
+                    return story
+                }
+            });
 
 
+            if (this.state.currentSearch == ''){
+                this.setState({stories: fetchStories});
+            
+            }
+
+            this.setState({stories: storySearchResult});
+            this.loadStories();
+
+    }
+    
 
 
 
@@ -53,7 +75,7 @@ class NewsBox extends Component{
         return(
             <div className="news-box">
             <Header title = "True News"></Header>
-            <SearchBar></SearchBar>
+            <SearchBar currentSearchStory = {this.state.currentSearch} onSearch = {this.handleStorySearchResult}></SearchBar>
             <LoadAmount></LoadAmount>
             <NewsList stories={this.state.stories}></NewsList>
             </div>
