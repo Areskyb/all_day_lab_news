@@ -14,9 +14,10 @@ class NewsList extends Component {
 
         // FUNCTIONS *********************************
 
+
         const storyNodes = this.props.stories.map( story => {
             return(
-                <Story title={story.title}></Story>
+                <Story title={story.title} url= {story.url} key={story.time}></Story>
             )
         })
 
