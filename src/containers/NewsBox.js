@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class NewsBox extends Component{
     constructor(props) {
@@ -11,7 +12,7 @@ class NewsBox extends Component{
 
     render(){
         return(
-            <h1>Hello ooooo o o o o</h1>
+            <Header title = "True News"></Header>
         )
     }
 }
