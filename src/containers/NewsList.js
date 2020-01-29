@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Story from '../components/Story';
 
 class NewsList extends Component {
 
@@ -6,7 +7,9 @@ class NewsList extends Component {
 
         return(
             <div className="news-list">
-                
+                <Story></Story>
+                <Story></Story>
+                <Story></Story>
             </div>
         )
     }
