@@ -8,32 +8,32 @@ class NewsBox extends Component{
     constructor(props) {
         super(props);
         this.state={
-            ids: [],
-            stories:[]
+            stories:[],
+            amount: 100
         }
     }
 
     componentDidMount(){
-        Promise.all([this.loadIds()])
+        this.loadStories()
     }
 
     // functions*****************************
      loadIds(){
         const url = "https://hacker-news.firebaseio.com/v0/topstories.json";
-        fetch(url)
-        .then(res => res.json())
-        .then(ids => this.ids = ids)
-        .then(this.loadStories(100))
+        return fetch(url)
+            .then(res => res.json())
     }
 
-    loadStories(amount){
+    loadStories(){
+        this.loadIds().then(ids => {
+            const promises = ids.slice(0, this.state.amount).map(id => {
+                return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
+                    .then(res => res.json())
+            })
     
-        for(let i = 0; i < amount ; i++){
-            let storyId = this.ids[i];
-            fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`)
-            .then(res => res.json())
-            .then(story => this.stories.push(story))
-        }
+            Promise.all(promises)
+            .then(stories => this.setState({stories:stories}))
+        }) 
     }
 
 
@@ -52,7 +52,7 @@ class NewsBox extends Component{
             <Header title = "True News"></Header>
             <SearchBar></SearchBar>
             <LoadAmount></LoadAmount>
-            <NewsList stories={this.stories}></NewsList>
+            <NewsList stories={this.state.stories}></NewsList>
             </div>
         )
     }
